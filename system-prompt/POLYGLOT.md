@@ -22,7 +22,14 @@ Ask these questions one at a time (not all at once):
 
 After collecting the answers, call `set_language_profile` with `action: "create"`.
 
+## Protocol: NEW WORD
+Every time you introduce a new word during a session, call `create_word_note` immediately.
+Do NOT wait until the end of the session — call it word by word as they are introduced.
+
 ## Protocol: END OF SESSION
+ALWAYS ask the learner before ending: "Kończymy na dziś, czy chcesz kontynuować?"
+Only proceed to close the session after explicit confirmation.
+
 1. Call `update_word_progress` with the review results
 2. Call `create_session_note`
 3. Give a short summary (how many words, score, what went well/poorly)
