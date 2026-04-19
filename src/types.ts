@@ -20,6 +20,7 @@ export interface LanguageProfile {
   current_level: string;
   target_level: string;
   vocab_mode: VocabMode;
+  notes_language: string;
   active: boolean;
   created: string;
   exam: ExamInfo | null;

@@ -1,7 +1,8 @@
 import type { CreateSessionNoteResult } from "../types.js";
-import { readStats } from "../vault/reader.js";
+import { readStats, readProfileByLanguage } from "../vault/reader.js";
 import { writeStats, appendSession } from "../vault/writer.js";
 import { wordToSlug, sessionFilePath } from "../vault/paths.js";
+import { getLabels } from "../i18n.js";
 
 export interface CreateSessionNoteParams {
   language: string;
@@ -18,6 +19,10 @@ export async function createSessionNote(
 ): Promise<CreateSessionNoteResult> {
   const today = new Date().toISOString().slice(0, 10);
 
+  const profile = readProfileByLanguage(vaultRoot, params.language);
+  const notesLanguage = profile?.notes_language ?? "en";
+  const labels = getLabels(notesLanguage);
+
   const frontmatter = [
     "---",
     `date: ${today}`,
@@ -31,15 +36,15 @@ export async function createSessionNote(
   ].join("\n");
 
   const newWordsSection = params.new_words.length > 0
-    ? `## Nowe słowa\n\n${params.new_words.map((w) => `- [[${wordToSlug(w)}]] — ${w}`).join("\n")}\n`
-    : "## Nowe słowa\n\nBrak nowych słów.\n";
+    ? `## ${labels.newWords}\n\n${params.new_words.map((w) => `- [[${wordToSlug(w)}]] — ${w}`).join("\n")}\n`
+    : `## ${labels.newWords}\n\n${labels.noNewWords}\n`;
 
   const reviewedSection = params.reviewed_words.length > 0
-    ? `## Powtórzone\n\n${params.reviewed_words.map((w) => `[[${wordToSlug(w)}]]`).join(", ")}\n`
-    : "## Powtórzone\n\nBrak powtórek.\n";
+    ? `## ${labels.reviewed}\n\n${params.reviewed_words.map((w) => `[[${wordToSlug(w)}]]`).join(", ")}\n`
+    : `## ${labels.reviewed}\n\n${labels.noReviewed}\n`;
 
   const notesSection = params.notes
-    ? `## Notatki sesji\n\n${params.notes}\n`
+    ? `## ${labels.sessionNotes}\n\n${params.notes}\n`
     : "";
 
   const content = [frontmatter, newWordsSection, reviewedSection, notesSection]

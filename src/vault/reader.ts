@@ -35,6 +35,7 @@ export function readProfile(vaultRoot: string): LanguageProfile[] {
     current_level: toString(p["current_level"]),
     target_level: toString(p["target_level"]),
     vocab_mode: (p["vocab_mode"] as "strict" | "loose") ?? "loose",
+    notes_language: toString(p["notes_language"] ?? "en"),
     active: Boolean(p["active"]),
     created: toString(p["created"]),
     exam: p["exam"] ? {

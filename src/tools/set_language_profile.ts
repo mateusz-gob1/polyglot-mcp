@@ -9,6 +9,7 @@ export interface SetLanguageProfileParams {
   current_level?: string;
   target_level?: string;
   vocab_mode?: "strict" | "loose";
+  notes_language?: string;
   exam?: ExamInfo | null;
   sprint?: SprintInfo | null;
 }
@@ -45,6 +46,7 @@ export async function setLanguageProfile(
       current_level: params.current_level ?? "A1",
       target_level: params.target_level ?? "A2",
       vocab_mode: params.vocab_mode ?? "loose",
+      notes_language: params.notes_language ?? "en",
       active: true,
       created: today,
       exam,
@@ -79,6 +81,7 @@ export async function setLanguageProfile(
       ...(params.target_level && { target_level: params.target_level }),
       ...(params.vocab_mode && { vocab_mode: params.vocab_mode }),
       ...(params.language_name && { language_name: params.language_name }),
+      ...(params.notes_language && { notes_language: params.notes_language }),
       exam,
       sprint,
     };

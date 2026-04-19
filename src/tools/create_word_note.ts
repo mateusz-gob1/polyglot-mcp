@@ -1,7 +1,8 @@
 import type { Word, CreateWordNoteResult } from "../types.js";
-import { readWord, readStats } from "../vault/reader.js";
+import { readWord, readStats, readProfileByLanguage } from "../vault/reader.js";
 import { writeWord, writeStats } from "../vault/writer.js";
 import { wordToSlug, wordFilePath } from "../vault/paths.js";
+import { getLabels } from "../i18n.js";
 
 export interface CreateWordNoteParams {
   language: string;
@@ -34,6 +35,10 @@ export async function createWordNote(
     };
   }
 
+  const profile = readProfileByLanguage(vaultRoot, params.language);
+  const notesLanguage = profile?.notes_language ?? "en";
+  const labels = getLabels(notesLanguage);
+
   const srs_due = addDay(today);
 
   const word: Word = {
@@ -51,7 +56,7 @@ export async function createWordNote(
     last_reviewed: null,
     tags: params.tags ?? [],
     slug,
-    body: buildBody(params),
+    body: buildBody(params, labels),
   };
 
   writeWord(vaultRoot, word);
@@ -83,22 +88,22 @@ function addDay(date: string): string {
   return d.toISOString().slice(0, 10);
 }
 
-function buildBody(params: CreateWordNoteParams): string {
+function buildBody(params: CreateWordNoteParams, labels: ReturnType<typeof getLabels>): string {
   const lines: string[] = [];
 
-  lines.push("## Przykład\n");
+  lines.push(`## ${labels.example}\n`);
   lines.push(params.example_sentence);
   lines.push(`*${params.example_translation}*\n`);
 
-  lines.push("## Mnemonik\n");
+  lines.push(`## ${labels.mnemonic}\n`);
   lines.push(params.mnemonic ?? "—\n");
 
   if (params.components) {
-    lines.push("## Komponenty\n");
+    lines.push(`## ${labels.components}\n`);
     lines.push(params.components + "\n");
   }
 
-  lines.push("## Powiązania\n");
+  lines.push(`## ${labels.relations}\n`);
   lines.push("—\n");
 
   return lines.join("\n");

@@ -19,8 +19,9 @@ Ask these questions one at a time (not all at once):
 2. What is your current level? (complete beginner / know a little / basic communication)
 3. What is your goal? (exam, travel, work, hobby)
 4. Are you preparing for a specific exam? If so — which one and when?
+5. In what language should your vault notes be written? (e.g. Polish, English, German — default: English)
 
-After collecting the answers, call `set_language_profile` with `action: "create"`.
+After collecting the answers, call `set_language_profile` with `action: "create"`, passing `notes_language` as a 2-letter ISO code (e.g. "pl", "en", "de").
 
 ## Protocol: NEW WORD
 Every time you introduce a new word during a session, call `create_word_note` immediately.

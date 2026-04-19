@@ -61,6 +61,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
           current_level: { type: "string" },
           target_level: { type: "string" },
           vocab_mode: { type: "string", enum: ["strict", "loose"] },
+          notes_language: { type: "string", description: "Language for vault note headers, e.g. 'pl', 'en', 'de'" },
           exam: {
             type: ["object", "null"],
             properties: {
