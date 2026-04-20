@@ -1,79 +1,95 @@
-# Setup — polyglot-mcp
+# Setup guide
 
-## Wymagania
+## Requirements
 
 - Node.js 18+
-- Claude Desktop lub Claude Code
-- Obsidian (opcjonalne — vault może być zwykłym folderem)
+- Claude Desktop or Claude Code
+- Obsidian (optional)
 
-## Instalacja
+## Step 1 — Clone and build
 
 ```bash
-# 1. Sklonuj repozytorium
 git clone https://github.com/mateusz-gob1/polyglot-mcp.git
 cd polyglot-mcp
-
-# 2. Zainstaluj zależności i skompiluj
 npm install
 npm run build
 ```
 
-## Konfiguracja
+## Step 2 — Configure Claude Desktop
 
-### Claude Desktop
-
-Otwórz plik konfiguracyjny:
+Open the config file:
 - **macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
 - **Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
 
-Dodaj wpis:
+Add the `mcpServers` block (keep any existing keys):
 
+**macOS / Linux:**
 ```json
 {
   "mcpServers": {
     "polyglot": {
       "command": "node",
-      "args": ["/bezwzgledna/sciezka/do/polyglot-mcp/dist/index.js"],
+      "args": ["/absolute/path/to/polyglot-mcp/dist/index.js"],
       "env": {
-        "VAULT_PATH": "/sciezka/do/twojego/vault"
+        "VAULT_PATH": "/absolute/path/to/your/vault"
       }
     }
   }
 }
 ```
 
-### Claude Code
-
-W katalogu projektu utwórz lub edytuj `.mcp.json`:
-
+**Windows:**
 ```json
 {
   "mcpServers": {
     "polyglot": {
       "command": "node",
-      "args": ["/bezwzgledna/sciezka/do/polyglot-mcp/dist/index.js"],
+      "args": ["C:\\Users\\YourName\\polyglot-mcp\\dist\\index.js"],
       "env": {
-        "VAULT_PATH": "/sciezka/do/twojego/vault"
+        "VAULT_PATH": "C:\\Users\\YourName\\my-vault"
       }
     }
   }
 }
 ```
 
-## System prompt
+> **Note:** Use double backslashes `\\` in Windows paths inside JSON.
 
-Skopiuj zawartość pliku `system-prompt/POLYGLOT.md` i wklej jako:
-- **Claude Desktop:** Settings → Custom Instructions
-- **Claude Code:** Dodaj do `CLAUDE.md` w katalogu projektu
+> **Note:** The vault folder is created automatically if it doesn't exist.
 
-## Weryfikacja
+## Step 3 — Add the system prompt
 
-Uruchom Claude i napisz cokolwiek — Claude powinien automatycznie wywołać `get_stats` i zainicjować onboarding jeśli to pierwsza sesja.
+1. Open Claude Desktop
+2. Create a new **Project** (e.g. "Polyglot")
+3. Paste the contents of `system-prompt/POLYGLOT.md` as the project instructions
+4. Restart Claude Desktop
 
-Możesz też sprawdzić czy serwer startuje poprawnie:
+## Step 4 — Verify
 
-```bash
-VAULT_PATH=/sciezka/do/vault node dist/index.js
+Restart Claude Desktop, open the Polyglot project and type anything. Claude should automatically call `get_stats` and start the onboarding flow.
+
+To verify the server started correctly, check the logs:
+- **macOS:** `~/Library/Logs/Claude/mcp-server-polyglot.log`
+- **Windows:** `%APPDATA%\Claude\logs\mcp-server-polyglot.log`
+
+You should see: `Polyglot MCP ready. Vault: <your path>`
+
+## Claude Code setup
+
+Create `.mcp.json` in your project root:
+
+```json
+{
+  "mcpServers": {
+    "polyglot": {
+      "command": "node",
+      "args": ["/absolute/path/to/polyglot-mcp/dist/index.js"],
+      "env": {
+        "VAULT_PATH": "/absolute/path/to/your/vault"
+      }
+    }
+  }
+}
 ```
 
-Powinieneś zobaczyć: `Polyglot MCP ready. Vault: /sciezka/do/vault`
+Then add the contents of `system-prompt/POLYGLOT.md` to your `CLAUDE.md`.
