@@ -104,9 +104,9 @@ You can study **any language** — exam mode is optional.
 |---|---|---|
 | HSK 1 | Chinese (zh) | 157 |
 | HSK 2 | Chinese (zh) | 135 |
-| HSK 3 | Chinese (zh) | 150 |
+| HSK 3 | Chinese (zh) | 254 |
 | JLPT N5 | Japanese (ja) | 103 |
-| JLPT N4 | Japanese (ja) | 150 |
+| JLPT N4 | Japanese (ja) | 179 |
 | DELE A1 | Spanish (es) | 100 |
 | DELE A2 | Spanish (es) | 98 |
 | Goethe A1 | German (de) | 98 |
