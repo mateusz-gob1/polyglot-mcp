@@ -20,8 +20,17 @@ export async function updateWordProgress(
   const updated: UpdateWordProgressResult["updated"] = [];
 
   for (const result of params.results) {
+    // Try slug from original word first, then fallback to scanning all words
+    // (handles CJK characters where slug = romanization, not the original word)
     const slug = wordToSlug(result.word);
-    const word = readWord(vaultRoot, params.language, slug);
+    let word = readWord(vaultRoot, params.language, slug);
+
+    if (!word) {
+      // Fallback: scan all words and match by word field
+      const allWords = readAllWords(vaultRoot, params.language);
+      word = allWords.find((w) => w.word === result.word) ?? null;
+    }
+
     if (!word) continue;
 
     const old_level = word.level;

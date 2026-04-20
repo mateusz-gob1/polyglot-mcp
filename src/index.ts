@@ -23,9 +23,14 @@ if (!vaultPath) {
 }
 
 if (!fs.existsSync(vaultPath)) {
-  console.error(`ERROR: VAULT_PATH does not exist: ${vaultPath}`);
-  console.error("Make sure the path points to an existing directory.");
-  process.exit(1);
+  try {
+    fs.mkdirSync(vaultPath, { recursive: true });
+    console.error(`Created vault directory: ${vaultPath}`);
+  } catch (err) {
+    console.error(`ERROR: Could not create VAULT_PATH: ${vaultPath}`);
+    console.error(err);
+    process.exit(1);
+  }
 }
 
 ensureVaultStructure(vaultPath);
