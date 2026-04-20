@@ -7,8 +7,13 @@ import { getVaultPaths, wordFilePath, wordsDirForLang, wordToSlug } from "./path
 function parseFrontmatter(content: string): { data: Record<string, unknown>; body: string } {
   const match = content.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/);
   if (!match) return { data: {}, body: content };
-  const data = yaml.load(match[1], { schema: yaml.JSON_SCHEMA }) as Record<string, unknown> ?? {};
-  return { data, body: match[2] };
+  try {
+    const data = yaml.load(match[1], { schema: yaml.JSON_SCHEMA }) as Record<string, unknown> ?? {};
+    return { data, body: match[2] };
+  } catch {
+    // Corrupted YAML — return empty data, preserve body
+    return { data: {}, body: match[2] ?? "" };
+  }
 }
 
 function toString(val: unknown): string {
@@ -78,7 +83,7 @@ function parseWordFile(content: string, slug: string): Word {
     level: (data["level"] as WordLevel) ?? "weak",
     cefr: toString(data["cefr"] ?? ""),
     exam_wordlist: toStringOrNull(data["exam_wordlist"]),
-    srs_due: toString(data["srs_due"]),
+    srs_due: data["srs_due"] ? toString(data["srs_due"]) : tomorrow(),
     srs_interval: Number(data["srs_interval"] ?? 1),
     srs_correct_streak: Number(data["srs_correct_streak"] ?? 0),
     created: toString(data["created"]),
@@ -127,4 +132,10 @@ export function readStats(vaultRoot: string): StatsFile {
     last_updated: toString(data["last_updated"] ?? new Date().toISOString().slice(0, 10)),
     languages,
   };
+}
+
+function tomorrow(): string {
+  const d = new Date();
+  d.setDate(d.getDate() + 1);
+  return d.toISOString().slice(0, 10);
 }
