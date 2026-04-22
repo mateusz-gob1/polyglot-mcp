@@ -98,7 +98,14 @@ Set an exam and a date. When fewer than 30 days remain, Claude gradually shifts 
 
 ## Supported languages & exams
 
-You can study **any language** — exam mode is optional.
+**You can study any language** — just start a conversation and Claude will guide you. Exam mode is a separate, optional feature on top of that.
+
+There are two separate concepts here:
+
+- **Learning a language** — works for any language in the world. Claude teaches you words, tracks your progress with SRS, and remembers everything between sessions. No configuration needed.
+- **Exam wordlists** — pre-built word sets for specific exams. Only available for the exams listed below. If your language or exam isn't listed, you still get full SRS and session tracking — just without a pre-built word set.
+
+### Built-in exam wordlists
 
 | Exam | Language | Words |
 |---|---|---|
@@ -111,6 +118,8 @@ You can study **any language** — exam mode is optional.
 | DELE A2 | Spanish (es) | 98 |
 | Goethe A1 | German (de) | 98 |
 | Goethe A2 | German (de) | 100 |
+
+> **Why isn't my language here?** Official exam wordlists need to be publicly available in open-source form to be included. Languages like Polish, Italian, or Korean don't have a globally recognised exam with a freely available word list — but you can absolutely learn them with polyglot-mcp.
 
 ---
 
