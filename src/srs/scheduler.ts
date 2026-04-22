@@ -88,7 +88,8 @@ export function filterExamWords(
   words: Word[],
   examWordlist: string,
   daysLeft: number,
-  limit: number
+  limit: number,
+  today: string
 ): Word[] {
   const examWords = words.filter((w) => w.exam_wordlist === examWordlist);
   const otherWords = words.filter((w) => w.exam_wordlist !== examWordlist);
@@ -98,8 +99,8 @@ export function filterExamWords(
   const examCount = Math.round(limit * examRatio);
   const otherCount = limit - examCount;
 
-  const due = getDueWords(examWords, new Date().toISOString().slice(0, 10), examCount);
-  const fill = getDueWords(otherWords, new Date().toISOString().slice(0, 10), otherCount);
+  const due = getDueWords(examWords, today, examCount);
+  const fill = getDueWords(otherWords, today, otherCount);
 
   return [...due, ...fill];
 }

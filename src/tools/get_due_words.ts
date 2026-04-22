@@ -78,7 +78,7 @@ export async function getDueWordsHandler(
   if (exam) {
     const daysLeft = daysBetween(today, exam.date);
     if (daysLeft <= 30 && exam.wordlist) {
-      const due_words = filterExamWords(words, exam.wordlist, daysLeft, limit);
+      const due_words = filterExamWords(words, exam.wordlist, daysLeft, limit, today);
       return {
         due_words,
         known_words,

@@ -4,8 +4,6 @@ Turn your Obsidian vault into a language learning hub — Claude becomes your pe
 
 No accounts. No subscriptions. No app to install. Just Claude, your vault, and a conversation.
 
-> **Demo GIF** — *coming soon*
-
 ---
 
 ## What is this?
