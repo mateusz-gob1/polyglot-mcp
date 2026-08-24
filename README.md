@@ -1,6 +1,17 @@
-# polyglot-mcp
+<div align="center">
+  <h1>🗣️ polyglot-mcp</h1>
 
-Turn your Obsidian vault into a language learning hub — Claude becomes your personal tutor that **remembers your progress between sessions**.
+  <p><strong>Turn your Obsidian vault into a language learning hub</strong><br/>
+  Claude becomes your personal tutor that remembers your progress between sessions</p>
+
+  <img src="https://img.shields.io/badge/Node.js-18%2B-339933?style=flat-square&logo=node.js&logoColor=white"/>
+  <img src="https://img.shields.io/badge/TypeScript-Server-3178C6?style=flat-square&logo=typescript&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Model%20Context%20Protocol-MCP-000000?style=flat-square"/>
+  <img src="https://img.shields.io/badge/Obsidian-Vault%20Storage-7C3AED?style=flat-square&logo=obsidian&logoColor=white"/>
+  <img src="https://img.shields.io/badge/License-MIT-yellow?style=flat-square"/>
+</div>
+
+<br/>
 
 No accounts. No subscriptions. No app to install. Just Claude, your vault, and a conversation.
 
